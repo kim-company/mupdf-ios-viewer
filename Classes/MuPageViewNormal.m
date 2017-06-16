@@ -1,10 +1,10 @@
-#include "common.h"
+#include "mupdf/common.h"
 #include "mupdf/pdf.h"
-#import "MuWord.h"
-#import "MuTextFieldController.h"
-#import "MuAnnotation.h"
+#import "mupdf/MuWord.h"
+#import "mupdf/MuTextFieldController.h"
+#import "mupdf/MuAnnotation.h"
 
-#import "MuPageViewNormal.h"
+#import "mupdf/MuPageViewNormal.h"
 
 #define STRIKE_HEIGHT (0.375f)
 #define UNDERLINE_HEIGHT (0.075f)
@@ -222,7 +222,7 @@ static void addMarkupAnnot(fz_document *doc, fz_page *page, int type, NSArray *r
 		}
 
 		annot = pdf_create_annot(ctx, (pdf_page *)page, type);
-		pdf_set_annot_quad_points(ctx, annot, (int)rects.count, quadpts);
+		pdf_set_annot_quad_points(ctx, annot, rects.count, quadpts);
 		pdf_set_markup_appearance(ctx, idoc, annot, color, alpha, line_thickness, line_height);
 	}
 	fz_always(ctx)
@@ -602,7 +602,6 @@ static void updatePixmap(fz_document *doc, fz_display_list *page_list, fz_displa
 	UIActivityIndicatorView *loadingView;
 	fz_pixmap *image_pix;
 	CGDataProviderRef imageData;
-	UIImageView *imageView;
 	fz_pixmap *tile_pix;
 	CGDataProviderRef tileData;
 	UIImageView *tileView;
@@ -621,6 +620,8 @@ static void updatePixmap(fz_document *doc, fz_display_list *page_list, fz_displa
 	id<MuDialogCreator> dialogCreator;
 	id<MuUpdater> updater;
 }
+
+@synthesize imageView;
 
 - (void) ensurePageLoaded
 {

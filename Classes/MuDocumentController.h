@@ -11,6 +11,8 @@
 #import "MuDialogCreator.h"
 #import "MuUpdater.h"
 
+#define GAP 20
+
 enum
 {
 	BARMODE_MAIN,
@@ -25,6 +27,14 @@ enum
 };
 
 @interface MuDocumentController : UIViewController <UIScrollViewDelegate, UIGestureRecognizerDelegate, UISearchBarDelegate, MuDialogCreator, MuUpdater>
+
+@property (nonatomic, strong) UIScrollView *canvas;
+@property (nonatomic, assign) fz_document *doc;
+@property (assign) int current; // currently visible page
+@property (assign) int width; // current screen size
+@property (assign) int height;
+
+
 - (instancetype) initWithFilename: (NSString*)nsfilename path:(NSString *)path document:(MuDocRef *)aDoc;
 - (void) createPageView: (int)number;
 - (void) gotoPage: (int)number animated: (BOOL)animated;

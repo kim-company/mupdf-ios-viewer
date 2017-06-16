@@ -1,13 +1,12 @@
-#include "common.h"
+#include "mupdf/common.h"
 
-#import "MuPageViewNormal.h"
-#import "MuPageViewReflow.h"
-#import "MuDocumentController.h"
-#import "MuTextFieldController.h"
-#import "MuChoiceFieldController.h"
-#import "MuPrintPageRenderer.h"
+#import "mupdf/MuPageViewNormal.h"
+#import "mupdf/MuPageViewReflow.h"
+#import "mupdf/MuDocumentController.h"
+#import "mupdf/MuTextFieldController.h"
+#import "mupdf/MuChoiceFieldController.h"
+#import "mupdf/MuPrintPageRenderer.h"
 
-#define GAP 20
 #define INDICATOR_Y -44-24
 #define SLIDER_W (width - GAP - 24)
 #define SEARCH_W (width - GAP - 170)
@@ -123,13 +122,11 @@ static void saveDoc(const char *current_path, fz_document *doc)
 
 @implementation MuDocumentController
 {
-	fz_document *doc;
 	MuDocRef *docRef;
 	NSString *key;
 	NSString *_filePath;
 	BOOL reflowMode;
 	MuOutlineController *outline;
-	UIScrollView *canvas;
 	UILabel *indicator;
 	UISlider *slider;
 	UISearchBar *searchBar;
@@ -147,13 +144,16 @@ static void saveDoc(const char *current_path, fz_document *doc)
 	int searchPage;
 	int cancelSearch;
 	int showLinks;
-	int width; // current screen size
-	int height;
-	int current; // currently visible page
 	int scroll_animating; // stop view updates during scrolling animations
 	float scale; // scale applied to views (only used in reflow mode)
 	BOOL _isRotating;
 }
+
+@synthesize doc;
+@synthesize canvas;
+@synthesize current;
+@synthesize width;
+@synthesize height;
 
 - (instancetype) initWithFilename: (NSString*)filename path:(NSString *)cstr document: (MuDocRef *)aDoc
 {
@@ -254,6 +254,7 @@ static void saveDoc(const char *current_path, fz_document *doc)
 	indicator.textAlignment = NSTextAlignmentCenter;
 	indicator.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent: 0.5];
 	indicator.textColor = [UIColor whiteColor];
+    indicator.layer.cornerRadius = 10.0;
 
 	[view addSubview: canvas];
 	[view addSubview: indicator];
@@ -266,13 +267,12 @@ static void saveDoc(const char *current_path, fz_document *doc)
 	if ([UIDevice currentDevice].systemVersion.floatValue < 7.0)
 	{
 		sliderWrapper = [[UIBarButtonItem alloc] initWithCustomView: slider];
-
 		self.toolbarItems = @[sliderWrapper];
 	}
 
 	// Set up the buttons on the navigation and search bar
 
-	fz_outline *outlineRoot = NULL;
+	fz_outline *outlineRoot;
 	fz_try(ctx)
 		outlineRoot = fz_load_outline(ctx, doc);
 	fz_catch(ctx)
@@ -361,7 +361,7 @@ static void saveDoc(const char *current_path, fz_document *doc)
 
 	indicator.text = [NSString stringWithFormat: @" %d of %d ", current+1, fz_count_pages(ctx, doc)];
 
-	[self.navigationController setToolbarHidden: NO animated: animated];
+	[self.navigationController setToolbarHidden: TRUE animated: animated];
 }
 
 - (void) viewWillLayoutSubviews
@@ -435,7 +435,7 @@ static void saveDoc(const char *current_path, fz_document *doc)
 			slider.frame = r;
 		}
 		[self.navigationController setNavigationBarHidden: NO];
-		[self.navigationController setToolbarHidden: NO];
+		[self.navigationController setToolbarHidden: YES];
 		[indicator setHidden: NO];
 
 		[UIView beginAnimations: @"MuNavBar" context: NULL];
@@ -475,7 +475,7 @@ static void saveDoc(const char *current_path, fz_document *doc)
 - (void) onShowOutline: (id)sender
 {
 	//  rebuild the outline in case the layout has changed
-	fz_outline *root = NULL;
+	fz_outline *root;
 	fz_try(ctx)
 		root = fz_load_outline(ctx, doc);
 	fz_catch(ctx)
