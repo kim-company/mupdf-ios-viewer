@@ -1,5 +1,5 @@
-#include "common.h"
-#import "MuPrintPageRenderer.h"
+#include "mupdf/common.h"
+#import "mupdf/MuPrintPageRenderer.h"
 
 const int MaxStripPixels = 1024*1024;
 
@@ -113,7 +113,6 @@ static void renderPage(fz_document *doc, fz_page *page, fz_pixmap *pix, fz_matri
 			dev = fz_new_draw_device(ctx, ctm, pix);
 			fz_clear_pixmap_with_value(ctx, pix, 0xFF);
 			fz_run_page(ctx, page, dev, &fz_identity, NULL);
-			fz_close_device(ctx, dev);
 		}
 		fz_always(ctx)
 		{

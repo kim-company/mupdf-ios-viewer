@@ -1,4 +1,4 @@
-#import "MuAnnotSelectView.h"
+#import "mupdf/MuAnnotSelectView.h"
 
 @implementation MuAnnotSelectView
 {

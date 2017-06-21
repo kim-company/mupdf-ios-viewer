@@ -1,5 +1,5 @@
-#import "common.h"
-#import "MuHitView.h"
+#import "mupdf/common.h"
+#import "mupdf/MuHitView.h"
 
 @implementation MuHitView
 {

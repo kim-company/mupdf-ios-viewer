@@ -1,4 +1,4 @@
-#import "MuTextFieldController.h"
+#import "mupdf/MuTextFieldController.h"
 
 @interface MuTextFieldController ()
 @property (retain, nonatomic) IBOutlet UINavigationBar *navBar;

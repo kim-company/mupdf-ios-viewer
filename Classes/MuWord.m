@@ -1,4 +1,4 @@
-#import "MuWord.h"
+#import "mupdf/MuWord.h"
 
 @implementation MuWord
 {

@@ -1,7 +1,7 @@
-#include "common.h"
+#include "mupdf/common.h"
 #include "mupdf/fitz.h"
 
-#import "MuAppDelegate.h"
+#import "mupdf/MuAppDelegate.h"
 
 #ifdef CRASHLYTICS_ENABLE
 #import <Fabric/Fabric.h>

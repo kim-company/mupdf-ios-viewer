@@ -1,5 +1,5 @@
-#import "MuDocumentController.h"
-#import "MuOutlineController.h"
+#import "mupdf/MuDocumentController.h"
+#import "mupdf/MuOutlineController.h"
 
 @implementation MuOutlineController
 {

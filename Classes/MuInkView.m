@@ -1,5 +1,5 @@
-#include "common.h"
-#import "MuInkView.h"
+#include "mupdf/common.h"
+#import "mupdf/MuInkView.h"
 
 @implementation MuInkView
 {

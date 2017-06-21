@@ -1139,10 +1139,13 @@ static void updatePixmap(fz_document *doc, fz_display_list *page_list, fz_displa
 			} else {
 				printf("discard tile\n");
 			}
+            [self tileRendered];
 			[image release];
 		});
 	});
 }
+
+- (void)tileRendered {}
 
 - (void) scrollViewDidScrollToTop:(UIScrollView *)scrollView { [self loadTile]; }
 - (void) scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView { [self loadTile]; }

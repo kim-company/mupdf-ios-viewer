@@ -47,4 +47,7 @@ enum
 - (void) onTap: (UITapGestureRecognizer*)sender;
 - (void) showNavigationBar;
 - (void) hideNavigationBar;
+
+// Added for e-dicola
+- (void) onDoubleTap: (UITapGestureRecognizer*)sender;
 @end

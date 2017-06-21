@@ -1,6 +1,6 @@
-#include "common.h"
-#import "MuTextSelectView.h"
-#import "MuWord.h"
+#include "mupdf/common.h"
+#import "mupdf/MuTextSelectView.h"
+#import "mupdf/MuWord.h"
 
 @implementation MuTextSelectView
 {

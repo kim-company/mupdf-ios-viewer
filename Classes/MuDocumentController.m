@@ -200,14 +200,14 @@ static void saveDoc(const char *current_path, fz_document *doc)
 
 - (void) addMainMenuButtons
 {
-	NSMutableArray *array = [NSMutableArray arrayWithCapacity:3];
+	NSMutableArray *array = [[NSMutableArray alloc] init];
 	[array addObject:moreButton];
 	[array addObject:searchButton];
 	if (outlineButton)
 		[array addObject:outlineButton];
 	[array addObject:reflowButton];
 	[array addObject:linkButton];
-	self.navigationItem.rightBarButtonItems = array ;
+	self.navigationItem.rightBarButtonItems = array;
 	self.navigationItem.leftBarButtonItem = backButton;
 }
 
@@ -233,8 +233,18 @@ static void saveDoc(const char *current_path, fz_document *doc)
 
 	UITapGestureRecognizer *tapRecog = [[UITapGestureRecognizer alloc] initWithTarget: self action: @selector(onTap:)];
 	tapRecog.delegate = self;
+    tapRecog.numberOfTapsRequired = 1;
 	[canvas addGestureRecognizer: tapRecog];
 	[tapRecog release];
+    
+    UITapGestureRecognizer *dubTapRecog = [[UITapGestureRecognizer alloc] initWithTarget: self action: @selector(onDoubleTap:)];
+    dubTapRecog.delegate = self;
+    dubTapRecog.numberOfTapsRequired = 2;
+    [canvas addGestureRecognizer: dubTapRecog];
+    [dubTapRecog release];
+    
+    [tapRecog requireGestureRecognizerToFail:dubTapRecog];
+    
 	// In reflow mode, we need to track pinch gestures on the canvas and pass
 	// the scale changes to the subviews.
 	UIPinchGestureRecognizer *pinchRecog = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(onPinch:)];
@@ -927,6 +937,10 @@ static void saveDoc(const char *current_path, fz_document *doc)
 	// For reflow mode, we load UIWebViews into the canvas. Returning YES
 	// here prevents them stealing our tap and pinch events.
 	return YES;
+}
+
+- (void) onDoubleTap: (UITapGestureRecognizer*)sender {
+    
 }
 
 - (void) onTap: (UITapGestureRecognizer*)sender

@@ -1,6 +1,6 @@
-#include "common.h"
-#import "MuDocumentController.h"
-#import "MuLibraryController.h"
+#include "mupdf/common.h"
+#import "mupdf/MuDocumentController.h"
+#import "mupdf/MuLibraryController.h"
 
 static void showAlert(NSString *msg, NSString *filename)
 {
@@ -26,9 +26,7 @@ static void showAlert(NSString *msg, NSString *filename)
 - (void) viewWillAppear: (BOOL)animated
 {
 	[super viewWillAppear:animated];
-	NSString *name = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleDisplayName"];
-	NSString *version = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
-	self.title = [NSString stringWithFormat: @"%@ %@ Documents", name, version];
+	self.title = @"PDF, XPS, CBZ and EPUB Documents";
 	[self reload];
 	timer = [NSTimer timerWithTimeInterval: 3
 		target: self selector: @selector(reload) userInfo: nil

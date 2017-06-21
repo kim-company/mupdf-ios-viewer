@@ -24,4 +24,10 @@
 - (void) resizeImage;
 - (void) loadPage;
 - (void) loadTile;
+
+// Added later for edicola
+- (void) renderPage;
+- (void) tileRendered;
+- (void) displayImage: (UIImage*)image;
+
 @end
